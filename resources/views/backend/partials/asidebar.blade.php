@@ -34,14 +34,30 @@ $systemSetting = App\Models\SystemSetting::first();
                 <span class="menu-title-text">APPS</span>
             </li>
             
-            <!--Loans Menu Item -->
+            <!--orders Menu Item -->
+            <li class="menu-item {{ request()->routeIs('orders.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">shopping_bag</span>
+                    <span class="title">Orders</span>
+                </a>
+                <ul class="menu-sub">
+                    <!-- orders List -->
+                    <li class="menu-item ">
+                        <a href="{{ route('orders.index') }}"
+                            class="menu-link {{ request()->routeIs('orders.index') ? 'active' : '' }} ">
+                            Orders List
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!--Services Menu Item -->
             <li class="menu-item {{ request()->routeIs('services.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">receipt_long</span>
                     <span class="title">Services</span>
                 </a>
                 <ul class="menu-sub">
-                    <!-- Loans List -->
+                    <!-- Services List -->
                     <li class="menu-item ">
                         <a href="{{ route('services.index') }}"
                             class="menu-link {{ request()->routeIs('services.index') ? 'active' : '' }} ">

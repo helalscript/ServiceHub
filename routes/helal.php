@@ -16,6 +16,7 @@ use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\LoanController;
 use App\Http\Controllers\Web\Backend\LoanPackageController;
 use App\Http\Controllers\Web\Backend\NotificationController;
+use App\Http\Controllers\Web\Backend\OrderController;
 use App\Http\Controllers\Web\Backend\PackageRepaymentCycleController;
 use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\RepaymentController;
@@ -64,9 +65,16 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     Route::resource('/home-page/social-link/index', HomePageSocialLinkContainerController::class)->names('cms.home_page.social_link')->except('show');
     Route::post('/home-page/social-link/status/{id}', [HomePageSocialLinkContainerController::class, 'status'])->name('cms.home_page.social_link.status');
 
+
+
     // Routes for ServiceController
     Route::resource('/services', ServiceController::class)->names('services');
     Route::post('/services/status/{id}', [ServiceController::class, 'status'])->name('services.status');
+
+    //Route for OrderController
+    Route::resource('/orders', OrderController::class)->names('orders')->only(['index', 'show', 'destroy','update']);
+
+
 
     // Routes for NotificationController
     Route::post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notification.read');
