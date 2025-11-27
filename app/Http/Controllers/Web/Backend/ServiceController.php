@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Web\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Service;
-use App\Enums\Page;
-use App\Enums\Section;
 use App\Helpers\Helper;
-use App\Models\CMS;
 use Exception;
 
 use Illuminate\Support\Facades\Log;
