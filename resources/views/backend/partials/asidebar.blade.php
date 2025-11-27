@@ -35,7 +35,7 @@ $systemSetting = App\Models\SystemSetting::first();
             </li>
             
             <!--Loans Menu Item -->
-            <li class="menu-item {{ request()->routeIs('loans.*') ? 'open' : '' }}">
+            <li class="menu-item {{ request()->routeIs('services.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">receipt_long</span>
                     <span class="title">Services</span>
@@ -43,15 +43,15 @@ $systemSetting = App\Models\SystemSetting::first();
                 <ul class="menu-sub">
                     <!-- Loans List -->
                     <li class="menu-item ">
-                        <a href=""
-                            class="menu-link {{ request()->routeIs('loans.index') ? 'active' : '' }} ">
+                        <a href="{{ route('services.index') }}"
+                            class="menu-link {{ request()->routeIs('services.index') ? 'active' : '' }} ">
                             Service List
                         </a>
                     </li>
                     <li class="menu-item ">
-                        <a href="{{ route('blogs.index') }}"
-                            class="menu-link {{ request()->routeIs('blogs.*') ? 'active' : '' }} ">
-                            blogs List
+                        <a href="{{ route('services.create') }}"
+                            class="menu-link {{ request()->routeIs('services.create') ? 'active' : '' }} ">
+                            Add New Service
                         </a>
                     </li>
                 </ul>

@@ -11,6 +11,7 @@ enum Section: string
     case HeroSection = 'hero_section';
     case ServicesSection = 'services_section';
     case ServicesSectionContent = 'services_section_content';
+    case SocialLinkContainer = 'social_link_container';
     case Footer = 'footer';
 
     // Service Page Sections
