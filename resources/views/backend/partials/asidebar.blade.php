@@ -177,6 +177,48 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
+            <!-- CMS Service Page Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.service_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">receipt_long</span>
+                    <span class="title">Service Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.service_page.hero_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.service_page.hero_section.create') ? 'active' : '' }}">
+                            Hero Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.service_page.service_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.service_page.service_section.create') ? 'active' : '' }}">
+                            Service Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- CMS Contact Us Page Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.contact_us_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">support</span>
+                    <span class="title">Contact Us Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.contact_us_page.hero_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.contact_us_page.hero_section.create') ? 'active' : '' }}">
+                            Hero Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.contact_us_page.contact_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.contact_us_page.contact_section.create') ? 'active' : '' }}">
+                            Contact Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
             <!-- Logout Menu Item -->
             <li class="menu-item">

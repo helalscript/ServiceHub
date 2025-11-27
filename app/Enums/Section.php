@@ -13,10 +13,11 @@ enum Section: string
     case ServicesSectionContent = 'services_section_content';
     case Footer = 'footer';
 
+    // Service Page Sections
+    case ServiceSection = 'service_section';
 
     // ===== Contact Us Page Sections =====
-    case Main = 'main';
-    case Form = 'form';
+    case ContactSection = 'contact_section';
 
 
 }
