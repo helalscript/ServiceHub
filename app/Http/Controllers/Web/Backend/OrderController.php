@@ -18,8 +18,6 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        // $data = Order::with('service')->get();
-        // dd($data);
         if ($request->ajax()) {
             $data = Order::with('service')->latest();
             return DataTables::of($data)

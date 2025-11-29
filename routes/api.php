@@ -7,6 +7,7 @@ use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\SocialLoginController;
 use App\Http\Controllers\API\Auth\UserController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
+use App\Http\Controllers\API\V1\CMS\IntroPageController;
 use App\Http\Controllers\API\V1\User\NotificationController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
 use Illuminate\Support\Facades\Route;
@@ -55,14 +56,12 @@ Route::get('dynamic-pages', [HomePageController::class, 'getDynamicPages']);
 Route::get('dynamic-pages/single/{slug}', [HomePageController::class, 'showDaynamicPage']);
 
 // route for home page
-Route::group(['prefix' => 'cms/home-page'], function () {
-    Route::get('/hero-section', [HomePageController::class, 'getHeroSection']);
-    Route::get('/service-section', [HomePageController::class, 'getServiceSection']);
-    Route::get('/about-section', [HomePageController::class, 'getAboutUsSection']);
-    Route::get('/quick-rate-section', [HomePageController::class, 'getQuickRateCheckSection']);
-    Route::get('/work-process-section', [HomePageController::class, 'getWorkProcessSection']);
-    Route::get('/faq-section', [HomePageController::class, 'getFaqSection']);
-    Route::get('/testimonial-section', [HomePageController::class, 'getTestimonialSection']);
-    Route::get('/custom-text-section', [HomePageController::class, 'getCustomTextSection']);
+Route::group(['prefix' => 'cms'], function () {
+    //intro page
+    Route::get('/intro-page/intro-video', [IntroPageController::class, 'getIntroVideo']);
+    Route::get('/intro-page/intro-section', [IntroPageController::class, 'getIntroSection']);
+    // home page
+    Route::get('/home-page/hero-section', [HomePageController::class, 'getHeroSection']);
+    Route::get('/home-page/service-section', [HomePageController::class, 'getServiceSection']);
 });
 
