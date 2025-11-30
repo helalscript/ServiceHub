@@ -40,7 +40,7 @@ class UserContactSupportService
             if (!empty($validatedData['file'])) {
                 $validatedData['file'] = Helper::fileUpload($validatedData['file'], 'file', $validatedData['file'] . '_' . getFileName($validatedData['file']));
             }
- 
+
             $contactSupport = ContactUs::create($validatedData);
             // Send notification to admins
             $this->sendAdminNotification($contactSupport);

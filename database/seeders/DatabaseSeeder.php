@@ -30,8 +30,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(SystemSettingSeeder::class);
-        // $this->call(CMSSeeder::class);
+        $this->call(CMSSeeder::class);
         $this->call(DynamicPageSeeder::class);
-
     }
 }

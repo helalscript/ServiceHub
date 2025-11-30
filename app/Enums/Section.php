@@ -11,12 +11,14 @@ enum Section: string
     case HeroSection = 'hero_section';
     case ServicesSection = 'services_section';
     case ServicesSectionContent = 'services_section_content';
+    case SocialLinkContainer = 'social_link_container';
     case Footer = 'footer';
 
+    // Service Page Sections
+    case ServiceSection = 'service_section';
 
     // ===== Contact Us Page Sections =====
-    case Main = 'main';
-    case Form = 'form';
+    case ContactSection = 'contact_section';
 
 
 }

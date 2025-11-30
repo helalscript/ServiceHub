@@ -3,27 +3,23 @@
 namespace App\Http\Controllers\Web\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Blog;
 use Illuminate\Http\Request;
-use App\Enums\Page;
-use App\Enums\Section;
+use App\Models\Service;
 use App\Helpers\Helper;
-use App\Models\CMS;
 use Exception;
 
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
 
-class BlogController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $containerData = CMS::where('page', Page::ResourcesPage)->where('section', Section::Blogs)->first();
         if ($request->ajax()) {
-            $data = Blog::latest();
+            $data = Service::latest();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('thumbnail', function ($data) {
@@ -44,7 +40,7 @@ class BlogController extends Controller
                 })
                 ->addColumn('action', function ($data) {
                     return '<div class="action-wrapper">
-                        <a type="button" href="' . route('blogs.edit', $data->id) . '"
+                        <a type="button" href="' . route('services.edit', $data->id) . '"
                                 class="ps-0 border-0 bg-transparent lh-1 position-relative top-2"
                                  ><i class="material-symbols-outlined fs-16 text-body">edit</i>
                             </a>
@@ -57,7 +53,7 @@ class BlogController extends Controller
                 ->rawColumns(['status', 'action', 'thumbnail'])
                 ->make(true);
         }
-        return view("backend.layouts.blog.index", compact('containerData'));
+        return view("backend.layouts.services.index");
     }
 
     /**
@@ -65,7 +61,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view("backend.layouts.blog.create");
+        return view("backend.layouts.services.create");
     }
 
     /**
@@ -75,23 +71,24 @@ class BlogController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
+            'sub_title' => 'required|string|max:255',
+            'price' => 'required|numeric|min:1',
+            'tax_percentage' => 'required|numeric|min:0|max:100',
+            'shipping_installation_cost' => 'required|numeric|min:0',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5240',
             'description' => 'required|string',
-            'tags' => 'nullable|array', // Assuming tags is an array of strings
-            'tags.*' => 'string|max:50', // Each tag should be a string
         ]);
         try {
             if ($request->hasFile('thumbnail')) {
-                $validatedData['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'blog', time() . '_' . getFileName($request->file('thumbnail')));
+                $validatedData['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'services', time() . '_' . getFileName($request->file('thumbnail')));
             }
-            $validatedData['tags'] = $request->input('tags') ? json_encode($request->input('tags')) : null; // Ensure tags is an array, even if empty, and json encode it
-            $validatedData['slug'] = Helper::makeSlug($validatedData['title'],'blogs');
-            Blog::Create($validatedData);
-            return redirect()->route('blogs.index')->with('success', 'Item created Successfully');
+            $validatedData['slug'] = Helper::makeSlug($validatedData['title'], 'services');
+            $validatedData['author_id'] = auth()->id();
+            Service::Create($validatedData);
+            return redirect()->route('services.index')->with('success', 'Item created Successfully');
         } catch (Exception $e) {
             Log::error("AboutPageHowItWorkController::store" . $e->getMessage());
-            return redirect()->route('blogs.index')->with('error', 'Item created Failed')->withInput();
+            return redirect()->route('services.index')->with('error', 'Item created Failed')->withInput();
         }
     }
 
@@ -101,9 +98,9 @@ class BlogController extends Controller
      */
     public function edit(string $id)
     {
-        $data = Blog::findOrFail($id);
+        $data = Service::findOrFail($id);
 
-        return view("backend.layouts.blog.edit", compact('data'));
+        return view("backend.layouts.services.edit", compact('data'));
     }
 
     /**
@@ -121,7 +118,7 @@ class BlogController extends Controller
         ]);
 
         try {
-            $data = Blog::findOrFail($id);
+            $data = Service::findOrFail($id);
 
             if ($request->hasFile('thumbnail')) {
                 if (!empty($data->thumbnail)) {
@@ -132,17 +129,17 @@ class BlogController extends Controller
             $validatedData['tags'] = $request->input('tags') ? json_encode($request->input('tags')) : null; // Ensure tags is an array, even if empty, and json encode it
             $data->update($validatedData);
             flash()->success('Item updated Successfully');
-            return redirect()->route('blogs.index');
+            return redirect()->route('services.index');
         } catch (Exception $e) {
             Log::error("AboutPageHowItWorkController::store" . $e->getMessage());
             flash()->error('Item updated Failed');
-            return redirect()->route('blogs.index');
+            return redirect()->route('services.index');
         }
     }
 
     public function destroy(string $id)
     {
-        $data = Blog::findOrFail($id);
+        $data = Service::findOrFail($id);
         if (empty($data)) {
             return response()->json([
                 "success" => false,
@@ -164,7 +161,7 @@ class BlogController extends Controller
 
     public function status(Request $request, $id)
     {
-        $data = Blog::find($id);
+        $data = Service::find($id);
         if (empty($data)) {
             return response()->json([
                 "success" => false,
@@ -182,29 +179,5 @@ class BlogController extends Controller
             'success' => true,
             'message' => 'Item status changed successfully.'
         ]);
-    }
-
-    // update main Faq container
-    public function updateContainer(Request $request)
-    {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'sub_title' => 'required|string|max:255',
-        ]);
-
-        try {
-            $data = CMS::updateOrCreate(
-                [
-                    'page' => Page::ResourcesPage->value,
-                    'section' => Section::Blogs->value,
-                ],
-                $validatedData
-            );
-
-            return redirect()->route('blogs.index')->with('success', 'Container update successfully');
-        } catch (Exception $e) {
-            Log::error("AboutPageHowItWorkController::updateHowItWorkContainer" . $e->getMessage());
-            return redirect()->route('blogs.index')->with('error', 'Container update unsuccessfully');
-        }
     }
 }

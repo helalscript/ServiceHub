@@ -34,24 +34,40 @@ $systemSetting = App\Models\SystemSetting::first();
                 <span class="menu-title-text">APPS</span>
             </li>
             
-            <!--Loans Menu Item -->
-            <li class="menu-item {{ request()->routeIs('loans.*') ? 'open' : '' }}">
+            <!--orders Menu Item -->
+            <li class="menu-item {{ request()->routeIs('orders.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">shopping_bag</span>
+                    <span class="title">Orders</span>
+                </a>
+                <ul class="menu-sub">
+                    <!-- orders List -->
+                    <li class="menu-item ">
+                        <a href="{{ route('orders.index') }}"
+                            class="menu-link {{ request()->routeIs('orders.index') ? 'active' : '' }} ">
+                            Orders List
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!--Services Menu Item -->
+            <li class="menu-item {{ request()->routeIs('services.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">receipt_long</span>
                     <span class="title">Services</span>
                 </a>
                 <ul class="menu-sub">
-                    <!-- Loans List -->
+                    <!-- Services List -->
                     <li class="menu-item ">
-                        <a href=""
-                            class="menu-link {{ request()->routeIs('loans.index') ? 'active' : '' }} ">
+                        <a href="{{ route('services.index') }}"
+                            class="menu-link {{ request()->routeIs('services.index') ? 'active' : '' }} ">
                             Service List
                         </a>
                     </li>
                     <li class="menu-item ">
-                        <a href="{{ route('blogs.index') }}"
-                            class="menu-link {{ request()->routeIs('blogs.*') ? 'active' : '' }} ">
-                            blogs List
+                        <a href="{{ route('services.create') }}"
+                            class="menu-link {{ request()->routeIs('services.create') ? 'active' : '' }} ">
+                            Add New Service
                         </a>
                     </li>
                 </ul>
@@ -173,6 +189,48 @@ $systemSetting = App\Models\SystemSetting::first();
                         <a href="{{ route('cms.home_page.services_section.index') }}"
                             class="menu-link {{ request()->routeIs('cms.home_page.services_section.index') ? 'active' : '' }}">
                             Our Services Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- CMS Service Page Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.service_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">receipt_long</span>
+                    <span class="title">Service Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.service_page.hero_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.service_page.hero_section.create') ? 'active' : '' }}">
+                            Hero Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.service_page.service_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.service_page.service_section.create') ? 'active' : '' }}">
+                            Service Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- CMS Contact Us Page Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.contact_us_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">support</span>
+                    <span class="title">Contact Us Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.contact_us_page.hero_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.contact_us_page.hero_section.create') ? 'active' : '' }}">
+                            Hero Section
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.contact_us_page.contact_section.create') }}"
+                            class="menu-link {{ request()->routeIs('cms.contact_us_page.contact_section.create') ? 'active' : '' }}">
+                            Contact Section
                         </a>
                     </li>
                 </ul>
