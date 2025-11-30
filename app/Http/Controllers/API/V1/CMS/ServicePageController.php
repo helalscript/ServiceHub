@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\Log;
 
 class ServicePageController extends Controller
 {
-     public function getHeroSection()
+    public function getHeroSection()
     {
         try {
             $data = CMS::where('page', Page::ServicePage)
                 ->where('section', Section::HeroSection)
-                ->select('id', 'image')
+                ->select('id', 'title', 'image')
                 ->where('status', 'active')
                 ->first();
 
@@ -27,7 +27,26 @@ class ServicePageController extends Controller
 
             return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
         } catch (Exception $e) {
-            Log::error("HomePageController::getHeroSection" . $e->getMessage());
+            Log::error("ServicePageController::getHeroSection" . $e->getMessage());
+            return Helper::jsonErrorResponse('Something went wrong', 500);
+        }
+    }
+    public function getServiceSection()
+    {
+        try {
+            $data = CMS::where('page', Page::ServicePage)
+                ->where('section', Section::ServiceSection)
+                ->select('id', 'title', 'description')
+                ->where('status', 'active')
+                ->first();
+
+            if (!$data) {
+                return Helper::jsonResponse(true, 'No data found', 200, []);
+            }
+
+            return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
+        } catch (Exception $e) {
+            Log::error("ServicePageController::getHeroSection" . $e->getMessage());
             return Helper::jsonErrorResponse('Something went wrong', 500);
         }
     }

@@ -6,8 +6,10 @@ use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\SocialLoginController;
 use App\Http\Controllers\API\Auth\UserController;
+use App\Http\Controllers\API\V1\CMS\ContactUsPageController;
 use App\Http\Controllers\API\V1\CMS\HomePageController;
 use App\Http\Controllers\API\V1\CMS\IntroPageController;
+use App\Http\Controllers\API\V1\CMS\ServicePageController;
 use App\Http\Controllers\API\V1\User\NotificationController;
 use App\Http\Controllers\API\V1\User\UserContactSupportController;
 use Illuminate\Support\Facades\Route;
@@ -63,5 +65,12 @@ Route::group(['prefix' => 'cms'], function () {
     // home page
     Route::get('/home-page/hero-section', [HomePageController::class, 'getHeroSection']);
     Route::get('/home-page/service-section', [HomePageController::class, 'getServiceSection']);
+
+    // service page
+    Route::get('/service-page/hero-section', [ServicePageController::class, 'getHeroSection']);
+    Route::get('/service-page/service-section', [ServicePageController::class, 'getServiceSection']);
+    // contact us page
+    Route::get('/contact-us-page/hero-section', [ContactUsPageController::class, 'getHeroSection']);
+    Route::get('/contact-us-page/contact-section', [ContactUsPageController::class, 'getContactSection']);
 });
 
