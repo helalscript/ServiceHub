@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ServiceService
 {
-    protected $user;
+    // protected $user;
 
-    public function __construct()
-    {
-        $this->user = Auth::user();
-    }
+    // public function __construct()
+    // {
+    //     $this->user = Auth::user();
+    // }
     /**
      * Fetch all resources.
      *
