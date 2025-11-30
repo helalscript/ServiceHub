@@ -105,7 +105,7 @@ class HomePageController extends Controller
         try {
             $data = CMS::where('page', Page::HomePage)
                 ->where('section', Section::HeroSection)
-                ->select('id', 'title', 'description', 'button_text', 'image')
+                ->select('id', 'image')
                 ->where('status', 'active')
                 ->first();
 
@@ -128,7 +128,7 @@ class HomePageController extends Controller
                 ['section', Section::ServicesSection],
                 ['status', 'active']
             ])
-                ->select('id', 'title', 'sub_title')
+                ->select('id', 'title', 'description')
                 ->first();
 
             $contents = CMS::where([
@@ -136,182 +136,21 @@ class HomePageController extends Controller
                 ['section', Section::ServicesSectionContent],
                 ['status', 'active']
             ])
-                ->select('id', 'title', 'description', 'button_text', 'image')
+                ->select('id', 'image')
                 ->get();
 
+            $system = SystemSetting::select('id', 'logo', )->first();
             // Use Laravel Collection to pass data
             $data = collect([
                 'id' => $section->id,
-                'section_title' => $section->title,
-                'title' => $section->sub_title,
+                'title' => $section->title,
+                'description' => $section->description ?? '',
                 'contents' => $contents,
             ]);
 
             return Helper::jsonResponse(true, 'Data fetched successfully', 200, $data);
         } catch (Exception $e) {
             Log::error("HomePageController::getFeatureSection - " . $e->getMessage());
-            return Helper::jsonErrorResponse('Something went wrong', 500);
-        }
-    }
-    public function getAboutUsSection()
-    {
-        try {
-            $data = CMS::where('page', Page::HomePage)
-                ->where('section', Section::AboutUs)
-                ->where('status', 'active')
-                ->select('id', 'title', 'sub_title', 'description', 'image')
-                ->first();
-
-            if (!$data) {
-                return Helper::jsonResponse(true, 'No data found', 200, []);
-            }
-
-            return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
-        } catch (Exception $e) {
-            Log::error("HomePageController::getHeroSection" . $e->getMessage());
-            return Helper::jsonErrorResponse('Something went wrong', 500);
-        }
-    }
-    public function getQuickRateCheckSection()
-    {
-        try {
-            $data = CMS::where('page', Page::HomePage)
-                ->where('section', Section::QuickRateCheck)
-                ->where('status', 'active')
-                ->select('id', 'title', 'description', 'button_text', 'image')
-                ->first();
-
-            if (!$data) {
-                return Helper::jsonResponse(true, 'No data found', 200, []);
-            }
-
-            return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
-        } catch (Exception $e) {
-            Log::error("HomePageController::getHeroSection" . $e->getMessage());
-            return Helper::jsonErrorResponse('Something went wrong', 500);
-        }
-    }
-    public function getWorkProcessSection()
-    {
-        try {
-            $section = CMS::where([
-                ['page', Page::HomePage],
-                ['section', Section::WorkProcessSection],
-                ['status', 'active']
-            ])
-                ->select('id', 'title', 'sub_title')
-                ->first();
-
-            $contents = CMS::where([
-                ['page', Page::HomePage],
-                ['section', Section::WorkProcessSectionContent],
-                ['status', 'active']
-            ])
-                ->select('id', 'title', 'description', 'image')
-                ->get();
-
-            // Use Laravel Collection to pass data
-            $data = collect([
-                'id' => $section->id,
-                'section_title' => $section->title,
-                'title' => $section->sub_title,
-                'contents' => $contents,
-            ]);
-
-            return Helper::jsonResponse(true, 'Data fetched successfully', 200, $data);
-        } catch (Exception $e) {
-            Log::error("HomePageController::getFeatureSection - " . $e->getMessage());
-            return Helper::jsonErrorResponse('Something went wrong', 500);
-        }
-    }
-
-    public function getFaqSection()
-    {
-        try {
-            $section = CMS::where([
-                ['page', Page::HomePage],
-                ['section', Section::FaqContainer],
-                ['status', 'active']
-            ])
-                ->select('id', 'title', 'sub_title')
-                ->first();
-
-            $contents = Faq::where('status', 'active')
-                ->select('id', 'question', 'answer')
-                ->get();
-
-            // Use Laravel Collection to pass data
-            $data = collect([
-                'id' => $section->id,
-                'section_title' => $section->title,
-                'title' => $section->sub_title,
-                'contents' => $contents,
-            ]);
-
-            return Helper::jsonResponse(true, 'Data fetched successfully', 200, $data);
-        } catch (Exception $e) {
-            Log::error("HomePageController::getFeatureSection - " . $e->getMessage());
-            return Helper::jsonErrorResponse('Something went wrong', 500);
-        }
-    }
-
-    public function getTestimonialSection()
-    {
-        try {
-            $section = CMS::where([
-                ['page', Page::HomePage],
-                ['section', Section::TestimonialSection],
-                ['status', 'active']
-            ])
-                ->select('id', 'title', 'sub_title')
-                ->first();
-
-            $contents = CMS::where([
-                ['page', Page::HomePage],
-                ['section', Section::TestimonialSectionContent],
-                ['status', 'active']
-            ])
-                ->select('id', 'title', 'description', 'sub_title', 'sub_description', 'image')
-                ->get();
-            //here title is number of start, sub_title is user name and sub_description is user tagline , image is user photo
-
-            // Use Laravel Collection to pass data
-            $data = collect([
-                'id' => $section->id,
-                'section_title' => $section->title,
-                'title' => $section->sub_title,
-                'contents' => $contents->map(function ($item) {
-                    return [
-                        'stars' => $item->title,
-                        'name' => $item->sub_title,
-                        'tagline' => $item->sub_description,
-                        'image' => $item->image
-                    ];
-                }),
-            ]);
-
-            return Helper::jsonResponse(true, 'Data fetched successfully', 200, $data);
-        } catch (Exception $e) {
-            Log::error("HomePageController::getFeatureSection - " . $e->getMessage());
-            return Helper::jsonErrorResponse('Something went wrong', 500);
-        }
-    }
-    public function getCustomTextSection()
-    {
-        try {
-            $data = CMS::where('page', Page::HomePage)
-                ->where('section', Section::CustomText)
-                ->where('status', 'active')
-                ->select('id', 'description')
-                ->first();
-
-            if (!$data) {
-                return Helper::jsonResponse(true, 'No data found', 200, []);
-            }
-
-            return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
-        } catch (Exception $e) {
-            Log::error("HomePageController::getJobSeekerSection" . $e->getMessage());
             return Helper::jsonErrorResponse('Something went wrong', 500);
         }
     }

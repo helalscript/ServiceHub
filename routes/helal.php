@@ -16,10 +16,12 @@ use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\LoanController;
 use App\Http\Controllers\Web\Backend\LoanPackageController;
 use App\Http\Controllers\Web\Backend\NotificationController;
+use App\Http\Controllers\Web\Backend\OrderController;
 use App\Http\Controllers\Web\Backend\PackageRepaymentCycleController;
 use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\RepaymentController;
 use App\Http\Controllers\Web\Backend\RepaymentTypeController;
+use App\Http\Controllers\Web\Backend\ServiceController;
 use App\Http\Controllers\Web\Backend\SystemSettingController;
 use App\Http\Controllers\Web\Backend\UserController;
 use Illuminate\Support\Facades\Route;
@@ -63,9 +65,15 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     Route::resource('/home-page/social-link/index', HomePageSocialLinkContainerController::class)->names('cms.home_page.social_link')->except('show');
     Route::post('/home-page/social-link/status/{id}', [HomePageSocialLinkContainerController::class, 'status'])->name('cms.home_page.social_link.status');
 
-    Route::resource('/blogs', BlogController::class)->names('blogs');
-    Route::post('/blogs/status/{id}', [BlogController::class, 'status'])->name('blogs.status');
-    Route::post('/blogs/update-container', [BlogController::class, 'updateContainer'])->name('blogs.update_container');
+
+
+    // Routes for ServiceController
+    Route::resource('/services', ServiceController::class)->names('services');
+    Route::post('/services/status/{id}', [ServiceController::class, 'status'])->name('services.status');
+
+    //Route for OrderController
+    Route::resource('/orders', OrderController::class)->names('orders')->only(['index', 'show', 'destroy','update']);
+
 
 
     // Routes for NotificationController
@@ -82,4 +90,4 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 // Public route for dynamic pages accessible to all users
 Route::get('/pages/{slug}', [DynamicPageController::class, 'showDaynamicPage'])->name('pages');
 
-require __DIR__.'/cms.php';
+require __DIR__ . '/cms.php';
