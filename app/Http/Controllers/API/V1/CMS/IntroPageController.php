@@ -31,7 +31,7 @@ class IntroPageController extends Controller
             ];
             return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
         } catch (Exception $e) {
-            Log::error("HomePageController::getHeroSection" . $e->getMessage());
+            Log::error("IntroPageController::getHeroSection" . $e->getMessage());
             return Helper::jsonErrorResponse('Something went wrong', 500);
         }
     }
@@ -60,7 +60,7 @@ class IntroPageController extends Controller
             ];
             return Helper::jsonResponse(true, 'Data fatced successfully', 200, $data);
         } catch (Exception $e) {
-            Log::error("HomePageController::getHeroSection" . $e->getMessage());
+            Log::error("IntroPageController::getHeroSection" . $e->getMessage());
             return Helper::jsonErrorResponse('Something went wrong', 500);
         }
     }
