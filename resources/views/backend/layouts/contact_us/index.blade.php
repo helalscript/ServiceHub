@@ -49,6 +49,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Message</th>
                                         <th scope="col">Action</th>
@@ -139,6 +140,19 @@
                         name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
+                    },
+                    {
+                        data: 'full_name',
+                        name: 'full_name',
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data?.length > 50) {
+                                return data.substring(0, 50) + '...';
+                            } else {
+                                return data;
+                            }
+                        }
                     },
                     {
                         data: 'email',
