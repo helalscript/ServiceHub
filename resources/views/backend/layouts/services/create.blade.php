@@ -79,7 +79,8 @@
                         {{-- Shipping --}}
                         <div class="col-lg-4">
                             <div class="form-group mb-4">
-                                <label class="text-secondary">Shipping / Installation Cost <span class="text-danger">*</span></label>
+                                <label class="text-secondary">Shipping / Installation Cost <span
+                                        class="text-danger">*</span></label>
                                 <input type="number" step="0.01" class="form-control" name="shipping_installation_cost"
                                     value="{{ old('shipping_installation_cost') }}" placeholder="Enter Cost">
                             </div>
@@ -103,6 +104,9 @@
                                 <label class="text-secondary mb-1">Thumbnail <span class="text-danger">*</span></label>
                                 <input class="dropify form-control" type="file" name="thumbnail" accept="image/*">
                             </div>
+                            @error('thumbnail')
+                                <div id="description-error" class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                     </div>
@@ -121,7 +125,7 @@
 @endsection
 
 @push('scripts')
-<script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
+    <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.dropify').dropify();
