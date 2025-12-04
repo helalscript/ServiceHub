@@ -117,10 +117,4 @@ class User extends Authenticatable implements JWTSubject
         // Return only the path for web requests
         return $value;
     }
-
-
-    public function clientProfile()
-    {
-        return $this->hasOne(ClientProfile::class);
-    }
 }

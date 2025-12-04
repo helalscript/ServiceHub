@@ -43,6 +43,6 @@ Route::group(['prefix' => 'cms'], function () {
 Route::apiResource('/orders', OrderController::class)->only(['index', 'store', 'show']);
 
 //service routes
-Route::apiResource('/services', ServiceController::class)->only(['show']);
+Route::apiResource('/services', ServiceController::class)->only(['index','show']);
 
 
