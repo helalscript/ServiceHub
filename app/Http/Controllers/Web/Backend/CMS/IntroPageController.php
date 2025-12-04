@@ -35,6 +35,8 @@ class IntroPageController extends Controller
             [
                 'image.mimes' => 'The intro video must be a file of type: mp4, avi, mov, wmv.',
                 'image.max' => 'The intro video size must not exceed 100MB.',
+                'image.required' => 'The intro video field is required.',
+                'image.file' => 'The intro video must be a valid file.',
             ]
         );
 
@@ -74,9 +76,9 @@ class IntroPageController extends Controller
 
     public function getIntroSection()
     {
-         $data = CMS::where('page', Page::IntroPage->value)
-                ->where('section', Section::IntroSection->value)
-                ->first();
+        $data = CMS::where('page', Page::IntroPage->value)
+            ->where('section', Section::IntroSection->value)
+            ->first();
 
         if ($data) {
             return view('backend.layouts.cms.intro_page.intro_section.create', compact('data'));
